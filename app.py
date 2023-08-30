@@ -3,7 +3,7 @@ import constructs
 
 from src.api_gateway.ordering_connector_2 import OrderingConnectorApiGatewayStackV2
 from src.ddb.endpoints_table import Endpoints
-from src.CodePipelineStack import CodePipelineStack
+from src.CodePipelineStackV2 import QVSPipelineStack
 
 class InitialDeploymentStack(cdk.Stack):
 
@@ -17,6 +17,6 @@ app = cdk.App()
 
 InitialDeploymentStack(app, "InitialDeploymentStack")
 
-CodePipelineStack(app, "ApiGatewayLambdaDynamoPipelineStack")
+QVSPipelineStack(app, "QVSPipelineStack")
 
 app.synth()
