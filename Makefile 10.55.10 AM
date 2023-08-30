@@ -1,0 +1,11 @@
+clean:
+	rm -rf ./cdk.out/
+
+init:
+	python3 -m venv .venv
+	source .venv/bin/activate
+	python3 -m pip install -r requirements.txt
+
+
+deploy_sandbox:
+	cdk deploy bgh-qvs-software-test-stack

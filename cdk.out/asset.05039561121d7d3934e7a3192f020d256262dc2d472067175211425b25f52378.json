@@ -1,0 +1,1511 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "OrderingConnector",
+    "version": "2021-07-11",
+    "description": "Ordering Gateway Connector API to pass purchased cart items, shopper identity\n\n# Authentication\n\n<!-- ReDoc-Inject: <security-definitions> -->"
+  },
+  "paths": {
+    "/v1/order/authorize/charges": {
+      "post": {
+        "operationId": "AuthPaymentForShoppingTrip",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthPaymentForShoppingTripRequestContent"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "AuthPaymentForShoppingTrip 200 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthPaymentForShoppingTripResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest 400 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponseContent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "AuthorizationDeclined 401 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationDeclinedResponseContent"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "ServiceError 500 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceErrorResponseContent"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "aws_proxy",
+          "httpMethod": "POST",
+          "uri": {
+            "Fn::Sub": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AmazonOrderingConnectorLambda.Arn}/invocations"
+          },
+          "credentials": {
+            "Fn::Sub": "${AmazonOrderingConnectorAPIGatewayExecutionRole.Arn}"
+          }
+        }
+      }
+    },
+    "/v1/order/cancel/charges": {
+      "post": {
+        "operationId": "CancelShoppingTrip",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelShoppingTripRequestContent"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "CancelShoppingTrip 200 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CancelShoppingTripResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest 400 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponseContent"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "ServiceError 500 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceErrorResponseContent"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "aws_proxy",
+          "httpMethod": "POST",
+          "uri": {
+            "Fn::Sub": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AmazonOrderingConnectorLambda.Arn}/invocations"
+          },
+          "credentials": {
+            "Fn::Sub": "${AmazonOrderingConnectorAPIGatewayExecutionRole.Arn}"
+          }
+        }
+      }
+    },
+    "/v1/order/capture/charges": {
+      "post": {
+        "operationId": "CapturePaymentForShoppingTrip",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapturePaymentForShoppingTripRequestContent"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "CapturePaymentForShoppingTrip 200 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapturePaymentForShoppingTripResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest 400 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponseContent"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "ServiceError 500 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceErrorResponseContent"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "aws_proxy",
+          "httpMethod": "POST",
+          "uri": {
+            "Fn::Sub": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AmazonOrderingConnectorLambda.Arn}/invocations"
+          },
+          "credentials": {
+            "Fn::Sub": "${AmazonOrderingConnectorAPIGatewayExecutionRole.Arn}"
+          }
+        }
+      }
+    },
+    "/v1/order/product": {
+      "post": {
+        "operationId": "GetProduct",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetProductRequestContent"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "GetProduct 200 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetProductResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest 400 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponseContent"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound 404 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponseContent"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "ServiceError 500 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceErrorResponseContent"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "ServiceUnavailable 503 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceUnavailableResponseContent"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "aws_proxy",
+          "httpMethod": "POST",
+          "uri": {
+            "Fn::Sub": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AmazonOrderingConnectorLambda.Arn}/invocations"
+          },
+          "credentials": {
+            "Fn::Sub": "${AmazonOrderingConnectorAPIGatewayExecutionRole.Arn}"
+          }
+        }
+      }
+    },
+    "/v1/order/products": {
+      "post": {
+        "operationId": "PreviewPurchase",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PreviewPurchaseRequestContent"
+              }
+            }
+          },
+          "required": true
+        },
+        "deprecated": true,
+        "responses": {
+          "200": {
+            "description": "PreviewPurchase 200 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PreviewPurchaseResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest 400 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponseContent"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "ServiceError 500 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceErrorResponseContent"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "ServiceUnavailable 503 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceUnavailableResponseContent"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "aws_proxy",
+          "httpMethod": "POST",
+          "uri": {
+            "Fn::Sub": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AmazonOrderingConnectorLambda.Arn}/invocations"
+          },
+          "credentials": {
+            "Fn::Sub": "${AmazonOrderingConnectorAPIGatewayExecutionRole.Arn}"
+          }
+        }
+      }
+    },
+    "/v1/order/purchases": {
+      "post": {
+        "operationId": "CreatePurchase",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePurchaseRequestContent"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "CreatePurchase 201 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePurchaseResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest 400 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponseContent"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "ServiceError 500 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceErrorResponseContent"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "aws_proxy",
+          "httpMethod": "POST",
+          "uri": {
+            "Fn::Sub": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AmazonOrderingConnectorLambda.Arn}/invocations"
+          },
+          "credentials": {
+            "Fn::Sub": "${AmazonOrderingConnectorAPIGatewayExecutionRole.Arn}"
+          }
+        }
+      }
+    },
+    "/v2/order/products": {
+      "post": {
+        "operationId": "PreviewPurchaseV2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PreviewPurchaseV2RequestContent"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "PreviewPurchaseV2 200 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PreviewPurchaseV2ResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest 400 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponseContent"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "ServiceError 500 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceErrorResponseContent"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "ServiceUnavailable 503 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceUnavailableResponseContent"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "aws_proxy",
+          "httpMethod": "POST",
+          "uri": {
+            "Fn::Sub": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AmazonOrderingConnectorLambda.Arn}/invocations"
+          },
+          "credentials": {
+            "Fn::Sub": "${AmazonOrderingConnectorAPIGatewayExecutionRole.Arn}"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AuthEvent": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 255,
+            "pattern": "^[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "location": {
+            "$ref": "#/components/schemas/AuthLocation"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "AuthLocation": {
+        "type": "string",
+        "enum": [
+          "ENTRY",
+          "EXIT"
+        ]
+      },
+      "AuthPaymentForShoppingTripRequestContent": {
+        "type": "object",
+        "properties": {
+          "storeId": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "shoppingTripId": {
+            "type": "string",
+            "maxLength": 255,
+            "pattern": "^[0-9a-zA-Z_\\-]+$"
+          },
+          "requestOrigin": {
+            "$ref": "#/components/schemas/RequestOrigin"
+          },
+          "paymentSources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PaymentSource"
+            }
+          }
+        },
+        "required": [
+          "paymentSources",
+          "requestOrigin",
+          "shoppingTripId",
+          "storeId"
+        ]
+      },
+      "AuthPaymentForShoppingTripResponseContent": {
+        "type": "object",
+        "properties": {
+          "authToken": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "authToken"
+        ]
+      },
+      "AuthorizationDeclinedResponseContent": {
+        "type": "object",
+        "properties": {
+          "errorMsg": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "errorMsg"
+        ]
+      },
+      "BadRequestResponseContent": {
+        "type": "object",
+        "properties": {
+          "errorMsg": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "errorMsg"
+        ]
+      },
+      "CancelShoppingTripRequestContent": {
+        "type": "object",
+        "properties": {
+          "storeId": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "shoppingTripId": {
+            "type": "string",
+            "maxLength": 255,
+            "pattern": "^[0-9a-zA-Z_\\-]+$"
+          },
+          "requestOrigin": {
+            "$ref": "#/components/schemas/RequestOrigin"
+          }
+        },
+        "required": [
+          "requestOrigin",
+          "shoppingTripId",
+          "storeId"
+        ]
+      },
+      "CancelShoppingTripResponseContent": {
+        "type": "object",
+        "properties": {
+          "confirmation": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "confirmation"
+        ]
+      },
+      "CapturePaymentForShoppingTripRequestContent": {
+        "type": "object",
+        "properties": {
+          "storeId": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "shoppingTripId": {
+            "type": "string",
+            "maxLength": 255,
+            "pattern": "^[0-9a-zA-Z_\\-]+$"
+          },
+          "requestOrigin": {
+            "$ref": "#/components/schemas/RequestOrigin"
+          },
+          "authToken": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "authToken",
+          "requestOrigin",
+          "shoppingTripId",
+          "storeId"
+        ]
+      },
+      "CapturePaymentForShoppingTripResponseContent": {
+        "type": "object",
+        "properties": {
+          "confirmation": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "confirmation"
+        ]
+      },
+      "CartItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "type": {
+            "$ref": "#/components/schemas/CartItemType"
+          },
+          "quantity": {
+            "$ref": "#/components/schemas/DecimalMeasure"
+          },
+          "externalIdentifiers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalIdentifier"
+            }
+          },
+          "lineItemId": {
+            "type": "string",
+            "maxLength": 255,
+            "description": "Optionally provided by callers so that output cart items can be specifically linked to input cart items."
+          }
+        },
+        "required": [
+          "id",
+          "quantity",
+          "type"
+        ]
+      },
+      "CartItemTags": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        }
+      },
+      "CartItemTotals": {
+        "type": "object",
+        "properties": {
+          "baseUnitPrice": {
+            "$ref": "#/components/schemas/UnitPrice"
+          },
+          "finalUnitPrice": {
+            "$ref": "#/components/schemas/UnitPrice"
+          }
+        },
+        "required": [
+          "finalUnitPrice"
+        ]
+      },
+      "CartItemType": {
+        "type": "string",
+        "enum": [
+          "SKU",
+          "SCANCODE"
+        ]
+      },
+      "CartItemWithPrice": {
+        "type": "object",
+        "properties": {
+          "cartItem": {
+            "$ref": "#/components/schemas/CartItem"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 255,
+            "description": "A human readable description of this cart item."
+          },
+          "charges": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Charge"
+            },
+            "description": "Component charges related to the cart item's final unit price."
+          },
+          "priceTotals": {
+            "$ref": "#/components/schemas/CartItemTotals"
+          },
+          "tags": {
+            "$ref": "#/components/schemas/CartItemTags"
+          }
+        },
+        "required": [
+          "cartItem",
+          "priceTotals",
+          "tags"
+        ]
+      },
+      "CartTotal": {
+        "type": "object",
+        "description": "Total charges for the purchase along with the composite breakdown into the sums of base prices, promotions, taxes, fees.",
+        "properties": {
+          "price": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "promotion": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "discountedPrice": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "tax": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "depositAndFee": {
+            "$ref": "#/components/schemas/Fee"
+          },
+          "componentFees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Fee"
+            },
+            "description": "Optional additional breakdown of fee subtotals that are required to sum to the \"depositAndFee\" amount."
+          },
+          "amount": {
+            "$ref": "#/components/schemas/Currency"
+          }
+        },
+        "required": [
+          "amount",
+          "depositAndFee",
+          "discountedPrice",
+          "price",
+          "promotion",
+          "tax"
+        ]
+      },
+      "CartTotalV2": {
+        "type": "object",
+        "description": "Totals, subtotals, and aggregated values for the purchase.",
+        "properties": {
+          "price": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "totalDiscounts": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "discountedSubtotal": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "finalPrice": {
+            "$ref": "#/components/schemas/Currency"
+          }
+        },
+        "required": [
+          "finalPrice"
+        ]
+      },
+      "Charge": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "type": {
+            "$ref": "#/components/schemas/ChargeType"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 50,
+            "description": "A human readable description of the charge."
+          },
+          "tags": {
+            "$ref": "#/components/schemas/ChargeTags"
+          }
+        },
+        "required": [
+          "tags",
+          "type",
+          "value"
+        ]
+      },
+      "ChargeTags": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        }
+      },
+      "ChargeType": {
+        "type": "string",
+        "enum": [
+          "DISCOUNT",
+          "TAX",
+          "FEE"
+        ]
+      },
+      "ConstraintViolation": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/ConstraintViolationType"
+          },
+          "subtype": {
+            "$ref": "#/components/schemas/ConstraintViolationSubtype"
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "cartItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CartItem"
+            }
+          }
+        },
+        "required": [
+          "reason",
+          "type"
+        ]
+      },
+      "ConstraintViolationSubtype": {
+        "type": "string",
+        "enum": [
+          "UNSUPPORTED_SALE_GIFT_CARD"
+        ]
+      },
+      "ConstraintViolationType": {
+        "type": "string",
+        "enum": [
+          "LOCKED_FOR_SALE",
+          "RECALLED",
+          "AGE_RESTRICTION_18",
+          "AGE_RESTRICTION_21",
+          "UNSUPPORTED_SALE"
+        ]
+      },
+      "CreatePurchaseRequestContent": {
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "type": "string"
+          },
+          "idempotentShoppingTripId": {
+            "type": "string"
+          },
+          "storeId": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "shoppingTrip": {
+            "$ref": "#/components/schemas/ShoppingTrip"
+          },
+          "cartItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CartItem"
+            }
+          },
+          "shopperIdentity": {
+            "$ref": "#/components/schemas/ShopperIdentity"
+          },
+          "shopperDeviceId": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "paymentSource": {
+            "$ref": "#/components/schemas/PaymentSource"
+          }
+        },
+        "required": [
+          "cartItems",
+          "idempotentShoppingTripId",
+          "requestId",
+          "shoppingTrip",
+          "storeId"
+        ]
+      },
+      "CreatePurchaseResponseContent": {
+        "type": "object",
+        "properties": {
+          "purchaseId": {
+            "type": "string",
+            "maxLength": 255
+          }
+        }
+      },
+      "Currency": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "description": "Currency amount expressed as an arbitrary decimal value."
+          },
+          "currencyCode": {
+            "type": "string",
+            "maxLength": 3,
+            "pattern": "^[A-Z]{3}$",
+            "description": "ISO defined 3-digit currency code."
+          }
+        },
+        "required": [
+          "amount",
+          "currencyCode"
+        ]
+      },
+      "DecimalMeasure": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "maxLength": 10
+          },
+          "unit": {
+            "type": "string",
+            "externalDocs": {
+              "description": "API Reference",
+              "url": "https://javadoc.io/static/org.jscience/jscience/4.3.1/javax/measure/unit/Unit.html"
+            }
+          }
+        },
+        "required": [
+          "unit",
+          "value"
+        ]
+      },
+      "ExternalIdentifier": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "type": {
+            "$ref": "#/components/schemas/ExternalIdentifierType"
+          }
+        },
+        "required": [
+          "id",
+          "type"
+        ]
+      },
+      "ExternalIdentifierType": {
+        "type": "string",
+        "enum": [
+          "UPC",
+          "EAN",
+          "BARCODE",
+          "GTIN",
+          "PLU"
+        ]
+      },
+      "FeatureSetType": {
+        "type": "string",
+        "enum": [
+          "PRICING",
+          "PROMOTIONS",
+          "TAXES_FEES"
+        ]
+      },
+      "Fee": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "amount": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "tax": {
+            "$ref": "#/components/schemas/Tax"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "amount",
+          "description"
+        ]
+      },
+      "GetProductRequestContent": {
+        "type": "object",
+        "properties": {
+          "storeId": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "shoppingTripId": {
+            "type": "string",
+            "maxLength": 255,
+            "pattern": "^[0-9a-zA-Z_\\-]+$"
+          },
+          "shopperIdentity": {
+            "$ref": "#/components/schemas/ShopperIdentity"
+          },
+          "cartItem": {
+            "$ref": "#/components/schemas/CartItem"
+          }
+        },
+        "required": [
+          "cartItem",
+          "shoppingTripId",
+          "storeId"
+        ]
+      },
+      "GetProductResponseContent": {
+        "type": "object",
+        "properties": {
+          "product": {
+            "$ref": "#/components/schemas/Product"
+          },
+          "constraintViolations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConstraintViolation"
+            }
+          }
+        },
+        "required": [
+          "constraintViolations",
+          "product"
+        ]
+      },
+      "LineItem": {
+        "type": "object",
+        "description": "A receipt line item for some quantity of a cart item.",
+        "properties": {
+          "cartItemWithPrice": {
+            "$ref": "#/components/schemas/CartItemWithPrice"
+          },
+          "charges": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Charge"
+            },
+            "description": "Component charge breakdown for line item level pricing."
+          },
+          "priceTotals": {
+            "$ref": "#/components/schemas/LineItemTotals"
+          }
+        },
+        "required": [
+          "cartItemWithPrice",
+          "charges",
+          "priceTotals"
+        ]
+      },
+      "LineItemTotals": {
+        "type": "object",
+        "properties": {
+          "priceForQuantity": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "finalPrice": {
+            "$ref": "#/components/schemas/Currency"
+          }
+        },
+        "required": [
+          "finalPrice"
+        ]
+      },
+      "NotFoundResponseContent": {
+        "type": "object",
+        "properties": {
+          "errorMsg": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "errorMsg"
+        ]
+      },
+      "PaymentSource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 255
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "PreviewPurchaseRequestContent": {
+        "type": "object",
+        "properties": {
+          "storeId": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "shoppingTripId": {
+            "type": "string",
+            "maxLength": 255,
+            "pattern": "^[0-9a-zA-Z_\\-]+$"
+          },
+          "requestOrigin": {
+            "$ref": "#/components/schemas/RequestOrigin"
+          },
+          "featureSet": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FeatureSetType"
+            }
+          },
+          "shopperIdentity": {
+            "$ref": "#/components/schemas/ShopperIdentity"
+          },
+          "shopperDeviceId": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "cartItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CartItem"
+            }
+          }
+        },
+        "required": [
+          "cartItems",
+          "featureSet",
+          "requestOrigin",
+          "shoppingTripId",
+          "storeId"
+        ]
+      },
+      "PreviewPurchaseResponseContent": {
+        "type": "object",
+        "properties": {
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          },
+          "promotions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Promotion"
+            }
+          },
+          "taxes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tax"
+            }
+          },
+          "depositAndFees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Fee"
+            }
+          },
+          "cartTotal": {
+            "$ref": "#/components/schemas/CartTotal"
+          },
+          "constraintViolations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConstraintViolation"
+            }
+          }
+        },
+        "required": [
+          "cartTotal",
+          "constraintViolations",
+          "depositAndFees",
+          "products",
+          "promotions",
+          "taxes"
+        ]
+      },
+      "PreviewPurchaseV2RequestContent": {
+        "type": "object",
+        "properties": {
+          "storeId": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "shoppingTripId": {
+            "type": "string",
+            "maxLength": 255,
+            "pattern": "^[0-9a-zA-Z_\\-]+$"
+          },
+          "requestOrigin": {
+            "$ref": "#/components/schemas/RequestOrigin"
+          },
+          "featureSet": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FeatureSetType"
+            }
+          },
+          "shopperIdentity": {
+            "$ref": "#/components/schemas/ShopperIdentity"
+          },
+          "shopperDeviceId": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "cartItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CartItem"
+            }
+          }
+        },
+        "required": [
+          "cartItems",
+          "featureSet",
+          "requestOrigin",
+          "shoppingTripId",
+          "storeId"
+        ]
+      },
+      "PreviewPurchaseV2ResponseContent": {
+        "type": "object",
+        "properties": {
+          "lineItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LineItem"
+            }
+          },
+          "additionalSubtotals": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Charge"
+            }
+          },
+          "cartTotal": {
+            "$ref": "#/components/schemas/CartTotalV2"
+          },
+          "constraintViolations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConstraintViolation"
+            }
+          }
+        },
+        "required": [
+          "additionalSubtotals",
+          "cartTotal",
+          "constraintViolations",
+          "lineItems"
+        ]
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "type": {
+            "$ref": "#/components/schemas/CartItemType"
+          },
+          "pricing": {
+            "$ref": "#/components/schemas/ProductPricing"
+          },
+          "quantity": {
+            "$ref": "#/components/schemas/DecimalMeasure"
+          }
+        },
+        "required": [
+          "id",
+          "pricing",
+          "quantity",
+          "type"
+        ]
+      },
+      "ProductPricing": {
+        "type": "object",
+        "properties": {
+          "unitPriceContext": {
+            "$ref": "#/components/schemas/UnitPriceContext"
+          },
+          "unitPrice": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "discountedPrice": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "promotions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Promotion"
+            }
+          },
+          "fees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Fee"
+            }
+          },
+          "taxes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tax"
+            }
+          }
+        },
+        "required": [
+          "unitPrice"
+        ]
+      },
+      "Promotion": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "amount": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "type": {
+            "$ref": "#/components/schemas/PromotionType"
+          },
+          "percentage": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "amount",
+          "description",
+          "type"
+        ]
+      },
+      "PromotionType": {
+        "type": "string",
+        "enum": [
+          "DEFAULT",
+          "MEMBERSHIP"
+        ]
+      },
+      "RequestOrigin": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "type": {
+            "$ref": "#/components/schemas/RequestOriginType"
+          }
+        },
+        "required": [
+          "id",
+          "type"
+        ]
+      },
+      "RequestOriginType": {
+        "type": "string",
+        "enum": [
+          "DASH_CART"
+        ]
+      },
+      "ServiceErrorResponseContent": {
+        "type": "object",
+        "properties": {
+          "errorMsg": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "errorMsg"
+        ]
+      },
+      "ServiceUnavailableResponseContent": {
+        "type": "object",
+        "properties": {
+          "errorMsg": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "errorMsg"
+        ]
+      },
+      "ShopperIdentity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 255
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "ShoppingTrip": {
+        "type": "object",
+        "properties": {
+          "startTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "authEvents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuthEvent"
+            }
+          }
+        },
+        "required": [
+          "authEvents",
+          "endTime",
+          "startTime"
+        ]
+      },
+      "Tax": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "amount": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "type": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "percentage": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "amount",
+          "description"
+        ]
+      },
+      "UnitPrice": {
+        "type": "object",
+        "properties": {
+          "quantity": {
+            "$ref": "#/components/schemas/DecimalMeasure"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/Currency"
+          }
+        },
+        "required": [
+          "amount",
+          "quantity"
+        ]
+      },
+      "UnitPriceContext": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "quantity": {
+            "$ref": "#/components/schemas/DecimalMeasure"
+          }
+        },
+        "required": [
+          "amount",
+          "quantity"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "aws.auth.sigv4": {
+        "type": "apiKey",
+        "description": "AWS Signature Version 4 authentication",
+        "name": "Authorization",
+        "in": "header",
+        "x-amazon-apigateway-authtype": "awsSigv4"
+      }
+    }
+  },
+  "security": [
+    {
+      "aws.auth.sigv4": []
+    }
+  ],
+  "x-amazon-apigateway-request-validator": "full",
+  "x-amazon-apigateway-request-validators": {
+    "full": {
+      "validateRequestParameters": true,
+      "validateRequestBody": true
+    }
+  }
+}

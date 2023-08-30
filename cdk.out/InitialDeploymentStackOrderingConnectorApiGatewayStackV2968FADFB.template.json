@@ -1,0 +1,1473 @@
+{
+ "Resources": {
+  "AmazonOrderingConnectorAPIGatewayCloudWatchRoleDC571E81": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "apigateway.amazonaws.com"
+       }
+      },
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGatewayCloudWatchRole/Resource"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayBBC8BD95": {
+   "Type": "AWS::ApiGateway::RestApi",
+   "Properties": {
+    "Description": "Ordering Gateway Connector API to pass purchased cart items, shopper identity",
+    "Name": "OrderingConnector"
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Resource"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayCloudWatchRole818DA9FC": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "apigateway.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+       ]
+      ]
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/CloudWatchRole/Resource"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayAccount5DE6D900": {
+   "Type": "AWS::ApiGateway::Account",
+   "Properties": {
+    "CloudWatchRoleArn": {
+     "Fn::GetAtt": [
+      "AmazonOrderingConnectorAPIGatewayCloudWatchRole818DA9FC",
+      "Arn"
+     ]
+    }
+   },
+   "DependsOn": [
+    "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+   ],
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Account"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayDeploymentC868830B9ed063239b42d34ae64e7d3b10471b67": {
+   "Type": "AWS::ApiGateway::Deployment",
+   "Properties": {
+    "Description": "Ordering Gateway Connector API to pass purchased cart items, shopper identity",
+    "RestApiId": {
+     "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+    }
+   },
+   "DependsOn": [
+    "AmazonOrderingConnectorAPIGatewayv1orderauthorizechargesPOST581FB9C3",
+    "AmazonOrderingConnectorAPIGatewayv1orderauthorizecharges0A093496",
+    "AmazonOrderingConnectorAPIGatewayv1ordercancelchargesPOST334E13F0",
+    "AmazonOrderingConnectorAPIGatewayv1ordercancelchargesB1DB5414",
+    "AmazonOrderingConnectorAPIGatewayv1ordercapturechargesPOSTF3E97290",
+    "AmazonOrderingConnectorAPIGatewayv1ordercapturecharges61F26339",
+    "AmazonOrderingConnectorAPIGatewayv1orderproductPOST5835DCA2",
+    "AmazonOrderingConnectorAPIGatewayv1orderproductB3887C25",
+    "AmazonOrderingConnectorAPIGatewayv1orderproductsPOST3450442F",
+    "AmazonOrderingConnectorAPIGatewayv1orderproductsD9426F8A",
+    "AmazonOrderingConnectorAPIGatewayv1orderpurchasesPOST3C7327F1",
+    "AmazonOrderingConnectorAPIGatewayv1orderpurchasesD5037434"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Deployment/Resource"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayDeploymentStageprod45895F20": {
+   "Type": "AWS::ApiGateway::Stage",
+   "Properties": {
+    "DeploymentId": {
+     "Ref": "AmazonOrderingConnectorAPIGatewayDeploymentC868830B9ed063239b42d34ae64e7d3b10471b67"
+    },
+    "RestApiId": {
+     "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+    },
+    "StageName": "prod"
+   },
+   "DependsOn": [
+    "AmazonOrderingConnectorAPIGatewayAccount5DE6D900"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/DeploymentStage.prod/Resource"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayv1orderauthorizecharges0A093496": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Fn::GetAtt": [
+      "AmazonOrderingConnectorAPIGatewayBBC8BD95",
+      "RootResourceId"
+     ]
+    },
+    "PathPart": "_v1_order_authorize_charges",
+    "RestApiId": {
+     "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Default/_v1_order_authorize_charges/Resource"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayv1orderauthorizechargesPOSTApiPermissionInitialDeploymentStackOrderingConnectorApiGatewayStackV2AmazonOrderingConnectorAPIGateway1FE9AEA6POSTv1orderauthorizechargesDF4D7E6E": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "OrderingConnectorLambda063A3CEC",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+       },
+       "/",
+       {
+        "Ref": "AmazonOrderingConnectorAPIGatewayDeploymentStageprod45895F20"
+       },
+       "/POST/_v1_order_authorize_charges"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Default/_v1_order_authorize_charges/POST/ApiPermission.InitialDeploymentStackOrderingConnectorApiGatewayStackV2AmazonOrderingConnectorAPIGateway1FE9AEA6.POST.._v1_order_authorize_charges"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayv1orderauthorizechargesPOSTApiPermissionTestInitialDeploymentStackOrderingConnectorApiGatewayStackV2AmazonOrderingConnectorAPIGateway1FE9AEA6POSTv1orderauthorizecharges181CA5BF": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "OrderingConnectorLambda063A3CEC",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+       },
+       "/test-invoke-stage/POST/_v1_order_authorize_charges"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Default/_v1_order_authorize_charges/POST/ApiPermission.Test.InitialDeploymentStackOrderingConnectorApiGatewayStackV2AmazonOrderingConnectorAPIGateway1FE9AEA6.POST.._v1_order_authorize_charges"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayv1orderauthorizechargesPOST581FB9C3": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "POST",
+    "Integration": {
+     "Credentials": {
+      "Fn::GetAtt": [
+       "AmazonOrderingConnectorAPIGatewayCloudWatchRoleDC571E81",
+       "Arn"
+      ]
+     },
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:",
+        {
+         "Ref": "AWS::Region"
+        },
+        ":lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "OrderingConnectorLambda063A3CEC",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "RequestModels": {
+     "application/json": "Empty"
+    },
+    "ResourceId": {
+     "Ref": "AmazonOrderingConnectorAPIGatewayv1orderauthorizecharges0A093496"
+    },
+    "RestApiId": {
+     "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Default/_v1_order_authorize_charges/POST/Resource"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayv1ordercancelchargesB1DB5414": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Fn::GetAtt": [
+      "AmazonOrderingConnectorAPIGatewayBBC8BD95",
+      "RootResourceId"
+     ]
+    },
+    "PathPart": "_v1_order_cancel_charges",
+    "RestApiId": {
+     "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Default/_v1_order_cancel_charges/Resource"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayv1ordercancelchargesPOSTApiPermissionInitialDeploymentStackOrderingConnectorApiGatewayStackV2AmazonOrderingConnectorAPIGateway1FE9AEA6POSTv1ordercancelcharges4D73923E": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "OrderingConnectorLambda063A3CEC",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+       },
+       "/",
+       {
+        "Ref": "AmazonOrderingConnectorAPIGatewayDeploymentStageprod45895F20"
+       },
+       "/POST/_v1_order_cancel_charges"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Default/_v1_order_cancel_charges/POST/ApiPermission.InitialDeploymentStackOrderingConnectorApiGatewayStackV2AmazonOrderingConnectorAPIGateway1FE9AEA6.POST.._v1_order_cancel_charges"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayv1ordercancelchargesPOSTApiPermissionTestInitialDeploymentStackOrderingConnectorApiGatewayStackV2AmazonOrderingConnectorAPIGateway1FE9AEA6POSTv1ordercancelcharges0386FA01": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "OrderingConnectorLambda063A3CEC",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+       },
+       "/test-invoke-stage/POST/_v1_order_cancel_charges"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Default/_v1_order_cancel_charges/POST/ApiPermission.Test.InitialDeploymentStackOrderingConnectorApiGatewayStackV2AmazonOrderingConnectorAPIGateway1FE9AEA6.POST.._v1_order_cancel_charges"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayv1ordercancelchargesPOST334E13F0": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "POST",
+    "Integration": {
+     "Credentials": {
+      "Fn::GetAtt": [
+       "AmazonOrderingConnectorAPIGatewayCloudWatchRoleDC571E81",
+       "Arn"
+      ]
+     },
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:",
+        {
+         "Ref": "AWS::Region"
+        },
+        ":lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "OrderingConnectorLambda063A3CEC",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "RequestModels": {
+     "application/json": "Empty"
+    },
+    "ResourceId": {
+     "Ref": "AmazonOrderingConnectorAPIGatewayv1ordercancelchargesB1DB5414"
+    },
+    "RestApiId": {
+     "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Default/_v1_order_cancel_charges/POST/Resource"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayv1ordercapturecharges61F26339": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Fn::GetAtt": [
+      "AmazonOrderingConnectorAPIGatewayBBC8BD95",
+      "RootResourceId"
+     ]
+    },
+    "PathPart": "_v1_order_capture_charges",
+    "RestApiId": {
+     "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Default/_v1_order_capture_charges/Resource"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayv1ordercapturechargesPOSTApiPermissionInitialDeploymentStackOrderingConnectorApiGatewayStackV2AmazonOrderingConnectorAPIGateway1FE9AEA6POSTv1ordercapturecharges52A18441": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "OrderingConnectorLambda063A3CEC",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+       },
+       "/",
+       {
+        "Ref": "AmazonOrderingConnectorAPIGatewayDeploymentStageprod45895F20"
+       },
+       "/POST/_v1_order_capture_charges"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Default/_v1_order_capture_charges/POST/ApiPermission.InitialDeploymentStackOrderingConnectorApiGatewayStackV2AmazonOrderingConnectorAPIGateway1FE9AEA6.POST.._v1_order_capture_charges"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayv1ordercapturechargesPOSTApiPermissionTestInitialDeploymentStackOrderingConnectorApiGatewayStackV2AmazonOrderingConnectorAPIGateway1FE9AEA6POSTv1ordercapturecharges0DCA3DBD": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "OrderingConnectorLambda063A3CEC",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+       },
+       "/test-invoke-stage/POST/_v1_order_capture_charges"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Default/_v1_order_capture_charges/POST/ApiPermission.Test.InitialDeploymentStackOrderingConnectorApiGatewayStackV2AmazonOrderingConnectorAPIGateway1FE9AEA6.POST.._v1_order_capture_charges"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayv1ordercapturechargesPOSTF3E97290": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "POST",
+    "Integration": {
+     "Credentials": {
+      "Fn::GetAtt": [
+       "AmazonOrderingConnectorAPIGatewayCloudWatchRoleDC571E81",
+       "Arn"
+      ]
+     },
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:",
+        {
+         "Ref": "AWS::Region"
+        },
+        ":lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "OrderingConnectorLambda063A3CEC",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "RequestModels": {
+     "application/json": "Empty"
+    },
+    "ResourceId": {
+     "Ref": "AmazonOrderingConnectorAPIGatewayv1ordercapturecharges61F26339"
+    },
+    "RestApiId": {
+     "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Default/_v1_order_capture_charges/POST/Resource"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayv1orderproductB3887C25": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Fn::GetAtt": [
+      "AmazonOrderingConnectorAPIGatewayBBC8BD95",
+      "RootResourceId"
+     ]
+    },
+    "PathPart": "_v1_order_product",
+    "RestApiId": {
+     "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Default/_v1_order_product/Resource"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayv1orderproductPOSTApiPermissionInitialDeploymentStackOrderingConnectorApiGatewayStackV2AmazonOrderingConnectorAPIGateway1FE9AEA6POSTv1orderproduct3B939744": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "OrderingConnectorLambda063A3CEC",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+       },
+       "/",
+       {
+        "Ref": "AmazonOrderingConnectorAPIGatewayDeploymentStageprod45895F20"
+       },
+       "/POST/_v1_order_product"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Default/_v1_order_product/POST/ApiPermission.InitialDeploymentStackOrderingConnectorApiGatewayStackV2AmazonOrderingConnectorAPIGateway1FE9AEA6.POST.._v1_order_product"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayv1orderproductPOSTApiPermissionTestInitialDeploymentStackOrderingConnectorApiGatewayStackV2AmazonOrderingConnectorAPIGateway1FE9AEA6POSTv1orderproductBC2B4ED8": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "OrderingConnectorLambda063A3CEC",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+       },
+       "/test-invoke-stage/POST/_v1_order_product"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Default/_v1_order_product/POST/ApiPermission.Test.InitialDeploymentStackOrderingConnectorApiGatewayStackV2AmazonOrderingConnectorAPIGateway1FE9AEA6.POST.._v1_order_product"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayv1orderproductPOST5835DCA2": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "POST",
+    "Integration": {
+     "Credentials": {
+      "Fn::GetAtt": [
+       "AmazonOrderingConnectorAPIGatewayCloudWatchRoleDC571E81",
+       "Arn"
+      ]
+     },
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:",
+        {
+         "Ref": "AWS::Region"
+        },
+        ":lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "OrderingConnectorLambda063A3CEC",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "RequestModels": {
+     "application/json": "Empty"
+    },
+    "ResourceId": {
+     "Ref": "AmazonOrderingConnectorAPIGatewayv1orderproductB3887C25"
+    },
+    "RestApiId": {
+     "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Default/_v1_order_product/POST/Resource"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayv1orderproductsD9426F8A": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Fn::GetAtt": [
+      "AmazonOrderingConnectorAPIGatewayBBC8BD95",
+      "RootResourceId"
+     ]
+    },
+    "PathPart": "_v1_order_products",
+    "RestApiId": {
+     "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Default/_v1_order_products/Resource"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayv1orderproductsPOSTApiPermissionInitialDeploymentStackOrderingConnectorApiGatewayStackV2AmazonOrderingConnectorAPIGateway1FE9AEA6POSTv1orderproductsC8599976": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "OrderingConnectorLambda063A3CEC",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+       },
+       "/",
+       {
+        "Ref": "AmazonOrderingConnectorAPIGatewayDeploymentStageprod45895F20"
+       },
+       "/POST/_v1_order_products"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Default/_v1_order_products/POST/ApiPermission.InitialDeploymentStackOrderingConnectorApiGatewayStackV2AmazonOrderingConnectorAPIGateway1FE9AEA6.POST.._v1_order_products"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayv1orderproductsPOSTApiPermissionTestInitialDeploymentStackOrderingConnectorApiGatewayStackV2AmazonOrderingConnectorAPIGateway1FE9AEA6POSTv1orderproducts7D4FA06D": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "OrderingConnectorLambda063A3CEC",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+       },
+       "/test-invoke-stage/POST/_v1_order_products"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Default/_v1_order_products/POST/ApiPermission.Test.InitialDeploymentStackOrderingConnectorApiGatewayStackV2AmazonOrderingConnectorAPIGateway1FE9AEA6.POST.._v1_order_products"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayv1orderproductsPOST3450442F": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "POST",
+    "Integration": {
+     "Credentials": {
+      "Fn::GetAtt": [
+       "AmazonOrderingConnectorAPIGatewayCloudWatchRoleDC571E81",
+       "Arn"
+      ]
+     },
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:",
+        {
+         "Ref": "AWS::Region"
+        },
+        ":lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "OrderingConnectorLambda063A3CEC",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "RequestModels": {
+     "application/json": "Empty"
+    },
+    "ResourceId": {
+     "Ref": "AmazonOrderingConnectorAPIGatewayv1orderproductsD9426F8A"
+    },
+    "RestApiId": {
+     "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Default/_v1_order_products/POST/Resource"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayv1orderpurchasesD5037434": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Fn::GetAtt": [
+      "AmazonOrderingConnectorAPIGatewayBBC8BD95",
+      "RootResourceId"
+     ]
+    },
+    "PathPart": "_v1_order_purchases",
+    "RestApiId": {
+     "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Default/_v1_order_purchases/Resource"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayv1orderpurchasesPOSTApiPermissionInitialDeploymentStackOrderingConnectorApiGatewayStackV2AmazonOrderingConnectorAPIGateway1FE9AEA6POSTv1orderpurchases05FFC2D9": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "OrderingConnectorLambda063A3CEC",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+       },
+       "/",
+       {
+        "Ref": "AmazonOrderingConnectorAPIGatewayDeploymentStageprod45895F20"
+       },
+       "/POST/_v1_order_purchases"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Default/_v1_order_purchases/POST/ApiPermission.InitialDeploymentStackOrderingConnectorApiGatewayStackV2AmazonOrderingConnectorAPIGateway1FE9AEA6.POST.._v1_order_purchases"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayv1orderpurchasesPOSTApiPermissionTestInitialDeploymentStackOrderingConnectorApiGatewayStackV2AmazonOrderingConnectorAPIGateway1FE9AEA6POSTv1orderpurchasesD94EC24F": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "OrderingConnectorLambda063A3CEC",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+       },
+       "/test-invoke-stage/POST/_v1_order_purchases"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Default/_v1_order_purchases/POST/ApiPermission.Test.InitialDeploymentStackOrderingConnectorApiGatewayStackV2AmazonOrderingConnectorAPIGateway1FE9AEA6.POST.._v1_order_purchases"
+   }
+  },
+  "AmazonOrderingConnectorAPIGatewayv1orderpurchasesPOST3C7327F1": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "POST",
+    "Integration": {
+     "Credentials": {
+      "Fn::GetAtt": [
+       "AmazonOrderingConnectorAPIGatewayCloudWatchRoleDC571E81",
+       "Arn"
+      ]
+     },
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:",
+        {
+         "Ref": "AWS::Region"
+        },
+        ":lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "OrderingConnectorLambda063A3CEC",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "RequestModels": {
+     "application/json": "Empty"
+    },
+    "ResourceId": {
+     "Ref": "AmazonOrderingConnectorAPIGatewayv1orderpurchasesD5037434"
+    },
+    "RestApiId": {
+     "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/AmazonOrderingConnectorAPIGateway/Default/_v1_order_purchases/POST/Resource"
+   }
+  },
+  "OrderingConnectorLambda063A3CEC": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "6416ae7ed490558bba2411bafe3a0d5343cfd80b28b4d3885cd80cd06be90ee4.zip"
+    },
+    "Handler": "lambda_function.lambda_handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "AmazonOrderingConnectorAPIGatewayCloudWatchRoleDC571E81",
+      "Arn"
+     ]
+    },
+    "Runtime": "python3.8"
+   },
+   "DependsOn": [
+    "AmazonOrderingConnectorAPIGatewayCloudWatchRoleDC571E81"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/OrderingConnectorLambda/Resource",
+    "aws:asset:path": "asset.6416ae7ed490558bba2411bafe3a0d5343cfd80b28b4d3885cd80cd06be90ee4",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "OrderingConnectorLambdaInvokePermission0F1F0EF3": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "OrderingConnectorLambda063A3CEC",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:aws:execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+       },
+       "/*"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/OrderingConnectorLambda/InvokePermission"
+   }
+  },
+  "APIGatewayExecutionRole6FB6ED92": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "apigateway.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/APIGatewayExecutionRole/Resource"
+   }
+  },
+  "APIGatewayExecutionRoleDefaultPolicyEA37CF21": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "OrderingConnectorLambda063A3CEC",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "OrderingConnectorLambda063A3CEC",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "APIGatewayExecutionRoleDefaultPolicyEA37CF21",
+    "Roles": [
+     {
+      "Ref": "APIGatewayExecutionRole6FB6ED92"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/APIGatewayExecutionRole/DefaultPolicy/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1WPzW7CMBCEn4W7s61AqsQxUPWGiuAB0OJs0238E8W2UBTl3VnHrSin/Wa03hmvYbuG1xXeQqWbrjJ8hekcUXdKrMvEaGE6eUNq/+WWefSG9ZhloVlhzy1GuuEoqxRi3fOy/cBaa59cVO/UGz9aEhT3n5LEdokoIE99GjTtMDzE783CB4rfvslWoVkZtNcGYcrFaLAcAnunPpLTMYPYfzyrsLlgCBQD1HmIhl3SHcUcOD8lfqbYp6iWvVyOXftURHjvXcPl8HGUMu5lA1t4W/0E5mqQf7MlOJV5B8gQ0BdvAQAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "InitialDeploymentStack/OrderingConnectorApiGatewayStackV2/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Outputs": {
+  "AmazonOrderingConnectorAPIGatewayEndpoint832ED399": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "https://",
+      {
+       "Ref": "AmazonOrderingConnectorAPIGatewayBBC8BD95"
+      },
+      ".execute-api.",
+      {
+       "Ref": "AWS::Region"
+      },
+      ".",
+      {
+       "Ref": "AWS::URLSuffix"
+      },
+      "/",
+      {
+       "Ref": "AmazonOrderingConnectorAPIGatewayDeploymentStageprod45895F20"
+      },
+      "/"
+     ]
+    ]
+   }
+  }
+ },
+ "Conditions": {
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-2"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

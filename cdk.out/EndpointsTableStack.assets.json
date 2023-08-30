@@ -1,0 +1,19 @@
+{
+  "version": "33.0.0",
+  "files": {
+    "b5df0b3a99d9da726ebaade1b9536c4fa534986a20ea8b6753da93abd714055b": {
+      "source": {
+        "path": "EndpointsTableStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "current_account-current_region": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "b5df0b3a99d9da726ebaade1b9536c4fa534986a20ea8b6753da93abd714055b.json",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}
